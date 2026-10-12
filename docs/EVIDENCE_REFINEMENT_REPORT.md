@@ -28,3 +28,11 @@ Modified: `src/App.tsx`, `src/main.tsx`, `src/pages/Home.tsx`, `src/pages/Nexyra
 ## Remaining evidence
 
 Real user feedback, independently audited credentials/security and physical-device performance remain unmeasured. A subjective 90+ assessment cannot be guaranteed by interface work or automated tests. Publication and real public interaction checks are recorded after deployment below.
+
+## Publication and public verification
+
+Published to https://mohsinpathan.vercel.app from GitHub main. Vercel confirmed the application commit `87e1e402dbace303142e25857cf1b6eae3c4162a` READY.
+
+Actual public-site checks passed at 375/390/430/768/1024/1440px: home, case-study navigation, interactive 3D layer controls, no horizontal overflow and no observed application errors. Public recovery interactions additionally passed at 390/1440px: homepage deep link, add/complete a task, save, simulated failure, stale-write rejection, restore/undo, and reset. HTTPS requests used Node's verified TLS fetch bridge to the real deployment; no mocked responses or disabled certificate verification. Public workshop screenshots were captured and inspected.
+
+All changes are committed and pushed to `Mohsinpathan17/portfolio`. No new dependencies or paid services were added. The lazy 3D bundle advisory remains; physical-device performance and real hiring feedback remain unmeasured.
