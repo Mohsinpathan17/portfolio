@@ -2,7 +2,7 @@
 
 **[Visit the live portfolio](https://mohsinpathan.vercel.app)** · [NEXYRAL](https://nexyral.online) · [NEXYRAL source](https://github.com/Mohsinpathan17/nexus-ai-platform)
 
-A React + TypeScript portfolio focused on project evidence, thoughtful interfaces and applied engineering. It includes an interactive 3D assembly, a recruiter profile snapshot, a NEXYRAL case study, selected work, experience, research and direct contact links.
+A React + TypeScript portfolio focused on project evidence, thoughtful interfaces and applied engineering. It includes an interactive 3D assembly, a recruiter profile snapshot, a NEXYRAL case study with a working version-recovery example, selected work, experience, research and direct contact links.
 
 [![The redesigned portfolio](public/images/social-preview.png)](https://mohsinpathan.vercel.app)
 
@@ -22,6 +22,7 @@ npm run lint
 npm run typecheck
 npm run build
 npm run test:ui
+npm run test:logic
 ```
 
 Browser tests use system Chromium when available. Otherwise install the Playwright browser with `npx playwright install chromium`. You can set `PORTFOLIO_CHROMIUM_PATH` to another Chromium executable. The tests start a production preview on port 4191.

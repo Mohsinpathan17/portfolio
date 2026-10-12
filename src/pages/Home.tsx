@@ -151,6 +151,10 @@ export default function Home() {
               Explore the case study
               <ArrowUpRight size={17} />
             </Link>
+            <Link className="portfolio-proof-link" to="/work/nexyral#workshop">
+              Try the recovery pattern
+              <ArrowUpRight size={15} />
+            </Link>
             <div className="flagship-links">
               <ExternalLink href={nexyral.live}>Live website</ExternalLink>
               <ExternalLink href={nexyral.repo}>Source code</ExternalLink>

@@ -5,6 +5,7 @@ import App from "./App";
 import "./styles/global.css";
 import "./styles/scene.css";
 import "./styles/case.css";
+import "./styles/evidence.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>

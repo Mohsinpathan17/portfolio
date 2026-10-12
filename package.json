@@ -12,7 +12,8 @@
     "lint": "oxlint",
     "test:ui": "playwright test",
     "check:visual": "node --use-env-proxy scripts/visual-check.mjs",
-    "resume": "node scripts/generate-resume.mjs"
+    "resume": "node scripts/generate-resume.mjs",
+    "test:logic": "node --test tests/*.test.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import EngineeringEvidence from "../components/evidence/EngineeringEvidence";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -33,9 +35,18 @@ const decisions = [
   },
 ];
 export default function NexyralCase() {
+  useEffect(() => {
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target)
+      target.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+  }, []);
   return (
     <article className="case-page">
-      <section className="case-hero container">
+      <section id="overview" className="case-hero container">
         <Link to="/#work" className="back-link">
           <ArrowLeft size={17} />
           Back to selected work
@@ -72,6 +83,12 @@ export default function NexyralCase() {
             <strong>Live, with ongoing development</strong>
           </div>
         </div>
+        <nav className="case-contents" aria-label="Case study contents">
+          <a href="#overview">Overview</a>
+          <a href="#workshop">Try the recovery pattern</a>
+          <a href="#tradeoffs">The tradeoff</a>
+          <a href="#implementation">Source evidence</a>
+        </nav>
         <a
           href={nexyral.live}
           target="_blank"
@@ -128,12 +145,13 @@ export default function NexyralCase() {
           </div>
         </div>
       </section>
+      <EngineeringEvidence />
       <section className="case-decisions container">
-        <SectionLabel number="03">ENGINEERING DECISIONS</SectionLabel>
+        <SectionLabel number="06">ARCHITECTURE BOUNDARIES</SectionLabel>
         <h2>
-          The parts worth
+          A clear interface.
           <br />
-          <span>looking closer at.</span>
+          <span>Explicit boundaries.</span>
         </h2>
         <div className="decision-grid">
           {decisions.map(({ icon: Icon, title, copy }) => (
@@ -147,7 +165,7 @@ export default function NexyralCase() {
       </section>
       <section className="case-evidence container">
         <div>
-          <SectionLabel number="04">TRY IT. INSPECT IT.</SectionLabel>
+          <SectionLabel number="07">TRY IT. INSPECT IT.</SectionLabel>
           <h2>
             Less guessing.
             <br />

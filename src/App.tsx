@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Contact from "./components/Contact";
 import Home from "./pages/Home";
-import NexyralCase from "./pages/NexyralCase";
+const NexyralCase = lazy(() => import("./pages/NexyralCase"));
 function ScrollManager() {
   const location = useLocation();
   useEffect(() => {
@@ -56,7 +56,20 @@ export default function App() {
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/work/nexyral" element={<NexyralCase />} />
+          <Route
+            path="/work/nexyral"
+            element={
+              <Suspense
+                fallback={
+                  <div className="case-loading container" role="status">
+                    Opening the case study…
+                  </div>
+                }
+              >
+                <NexyralCase />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

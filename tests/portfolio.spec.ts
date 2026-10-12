@@ -178,3 +178,75 @@ test("the portfolio remains usable when WebGL is unavailable", async ({
     "NEXYRAL",
   );
 });
+
+for (const width of [390, 1440])
+  test(`recovery example ${width}px: save, failure, stale request, restore and usable app`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/work/nexyral#workshop");
+    const workshop = page.locator(".recovery-workshop");
+    await expect(workshop).toBeVisible();
+    await page
+      .getByLabel("Add an example task")
+      .fill("Review the real implementation");
+    await page.getByRole("button", { name: "Add example task" }).click();
+    await page
+      .getByRole("checkbox", { name: "Review the real implementation" })
+      .check();
+    await page.getByLabel("App title").fill("A clearer launch board");
+    await page.getByLabel("Accent color").selectOption("forest");
+    await page.getByRole("button", { name: "Save a version" }).click();
+    await expect(
+      workshop.getByRole("heading", { name: "A clearer launch board" }),
+    ).toBeVisible();
+    await expect(workshop.getByRole("status")).toContainText("Version 1 saved");
+    await page.getByRole("button", { name: "Simulate failure" }).click();
+    await expect(workshop.getByRole("status")).toContainText(
+      "history are unchanged",
+    );
+    await expect(
+      workshop.getByRole("heading", { name: "A clearer launch board" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Try a stale save" }).click();
+    await expect(workshop.getByRole("status")).toContainText(
+      "Older request rejected",
+    );
+    await expect(
+      page.getByRole("button", { name: "Restore version 0" }),
+    ).toHaveCount(1);
+    await page.getByRole("button", { name: "Restore version 0" }).click();
+    await expect(
+      workshop.getByRole("heading", { name: "Launchboard", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("checkbox", { name: "Review the real implementation" }),
+    ).toBeChecked();
+    await expect(
+      page.getByRole("button", { name: "Restore version 1" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Restore version 1" }).click();
+    await expect(
+      workshop.getByRole("heading", { name: "A clearer launch board" }),
+    ).toBeVisible();
+    await workshop.getByRole("button", { name: "Reset", exact: true }).click();
+    await expect(
+      workshop.getByRole("heading", { name: "Launchboard", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Try a stale save" }),
+    ).toBeDisabled();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({
+      path: `artifacts/recovery-${width}.png`,
+      fullPage: true,
+    });
+    expect(errors).toEqual([]);
+  });
