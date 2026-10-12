@@ -130,9 +130,8 @@ export default function EngineeringEvidence() {
           <p>
             The project uses an AI-assisted implementation workflow. I focus on
             the product requirements, interface behavior, recovery flows and
-            release checks. The source and reports make that workflow
-            inspectable; the case study does not claim a custom-trained model or
-            independently audited production security.
+            release checks. The source and reports make the decisions, checks and current scope
+            inspectable.
           </p>
         </div>
       </section>
