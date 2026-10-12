@@ -34,3 +34,11 @@ Deployment verification, GitHub commit and reusable environment setup are record
 Release preparation: clean `npm ci --cache /tmp/portfolio-npm-cache`, lint, strict TypeScript, production build and the final seven-test browser run all passed. Development server startup on strict port5174 returned HTTP200 for homepage and case route; production preview checks were exercised on4190/4191. Reusable install/start instructions were appended to the cloud-environment draft while preserving the prior NEXYRAL instructions and existing credential requirements; the draft was saved for review, not published as an environment snapshot.
 
 The existing `mohsinpathan` Vercel project was verified as linked to `portfolio/main`, then updated to Vite with `npm ci`, `npm run build` and `dist`. Its public hostname remains `mohsinpathan.vercel.app`. No NEXYRAL, AWS or other Vercel project was deployed or modified.
+
+## Published release
+
+Source commit `4fadb51342ea872186952b7ba2b788f836e843af` was pushed to the user’s public `portfolio/main` repository. Vercel’s linked production deployment `dpl_2SVvZRGVQpX6U1UviSBE8UWoaac1` reached READY and serves **https://mohsinpathan.vercel.app**.
+
+Actual public-site checks passed at 375/390/430/768/1024/1440px: the 3D assembly rendered and changed on layer exploration, homepage/case views remained within the viewport, and no console/page errors were observed. Homepage and direct `/work/nexyral` requests returned HTTP200. The résumé returned application/pdf, matched the local file’s SHA-256 and contains the NEXYRAL project. The social preview returned image/png. These checks use real HTTPS responses with verified TLS, not mocked production content.
+
+Changed-file inventory: React entry/config and dependency files, removed legacy Express server, homepage/case/UI/scene components, content module, global/scene/case styles, public fonts/licenses/images/favicon/updated résumé, browser tests and visual/résumé scripts, README and this report. The original root résumé was preserved. No credentials or generated test artifacts were committed.

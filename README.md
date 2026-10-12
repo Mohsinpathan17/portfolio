@@ -4,6 +4,8 @@
 
 A React + TypeScript portfolio focused on project evidence, thoughtful interfaces and applied engineering. It includes an interactive 3D assembly, a recruiter profile snapshot, a NEXYRAL case study, selected work, experience, research and direct contact links.
 
+[![The redesigned portfolio](public/images/social-preview.png)](https://mohsinpathan.vercel.app)
+
 ## Run locally
 
 Node **24.19+** and npm are required.
