@@ -259,15 +259,15 @@ export default function Home() {
                 </div>
               </div>
               <span className="punch-caption">
-                CLIENT WEB / DESIGN TO DEPLOYMENT
+                WEB DESIGN STUDIO / BUSINESS WEBSITES
               </span>
             </a>
             <div className="project-card-copy">
-              <span className="eyebrow">03 / COLLABORATIVE CLIENT PROJECT</span>
+              <span className="eyebrow">03 / WEB STUDIO WEBSITE</span>
               <h3>Websites With Punch</h3>
               <p>
-                A lead-focused agency website for HVAC and solar businesses,
-                built collaboratively from design through deployment.
+                A website for a web design studio offering business website
+                creation, maintenance, pricing information and contact options.
               </p>
               <div className="project-tags">
                 <span>React</span>
