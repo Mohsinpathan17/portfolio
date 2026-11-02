@@ -53,7 +53,7 @@ export default function Home() {
         <div className="hero-copy">
           <div className="hero-eyebrow">
             <Asterisk className="small-cross" size={29} strokeWidth={1.7} />
-            SOFTWARE & APPLIED AI
+            MOHSIN PATHAN / CREATIVE ENGINEER
           </div>
           <h1>
             Useful software.
