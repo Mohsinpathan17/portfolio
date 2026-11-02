@@ -12,6 +12,7 @@ import {
   Layers3,
 } from "lucide-react";
 import Assembly from "../components/scene/Assembly";
+import ProjectDeck from "../components/ProjectDeck";
 import ProfileDialog from "../components/ProfileDialog";
 import { ExternalLink, SectionLabel } from "../components/ui";
 import { experience, nexyral, profile } from "../lib/content";
@@ -112,6 +113,7 @@ export default function Home() {
           Systems that hold together
         </div>
       </div>
+      <ProjectDeck />
       <section id="work" className="work-section container">
         <div className="section-heading">
           <div>
