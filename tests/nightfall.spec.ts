@@ -19,7 +19,7 @@ for (const width of [390, 768, 1440]) {
     const stage = explorer.locator(".dimension-stage");
     await stage.hover({ position: { x: 40, y: 80 } });
     await expect(stage).not.toHaveCSS("--turn-y", "0deg");
-    await stage.dispatchEvent("pointerleave");
+    await page.mouse.move(0, 0);
     await expect(stage).toHaveCSS("--turn-y", "0deg");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
