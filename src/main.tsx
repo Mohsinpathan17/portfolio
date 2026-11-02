@@ -13,3 +13,4 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </StrictMode>,
 );
+import "./styles/nightfall.css";
