@@ -1,34 +1,20 @@
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { EdgesGeometry, ExtrudeGeometry, Group, Shape } from "three";
-function boardGeometry() {
-  const shape = new Shape(),
-    w = 0.94,
-    h = 0.76,
-    r = 0.1;
-  shape.moveTo(-w + r, -h);
-  shape.lineTo(w - r, -h);
-  shape.quadraticCurveTo(w, -h, w, -h + r);
-  shape.lineTo(w, h - r);
-  shape.quadraticCurveTo(w, h, w - r, h);
-  shape.lineTo(-w + r, h);
-  shape.quadraticCurveTo(-w, h, -w, h - r);
-  shape.lineTo(-w, -h + r);
-  shape.quadraticCurveTo(-w, -h, -w + r, -h);
-  const geometry = new ExtrudeGeometry(shape, {
-    depth: 0.1,
-    bevelEnabled: true,
-    bevelSegments: 2,
-    steps: 1,
-    bevelSize: 0.025,
-    bevelThickness: 0.025,
-    curveSegments: 6,
-  });
-  geometry.center();
-  geometry.rotateX(-Math.PI / 2);
-  return geometry;
-}
-function Assembly({
+import { Group } from "three";
+
+const orbitColors = ["#62ecff", "#a98cff", "#b4fbbf"] as const;
+const stars = Array.from({ length: 34 }, (_, i) => {
+  const a = i * 2.399963229728653;
+  const radius = 1.7 + (i % 7) * 0.17;
+  return {
+    x: Math.cos(a) * radius,
+    y: Math.sin(i * 1.74) * 1.45,
+    z: Math.sin(a) * radius,
+    size: i % 4 === 0 ? 0.022 : 0.012,
+  };
+});
+
+function Reactor({
   expanded,
   moving,
   active,
@@ -38,111 +24,117 @@ function Assembly({
   active: number;
 }) {
   const root = useRef<Group>(null);
-  const plates = useRef<(Group | null)[]>([]);
-  const geometry = useMemo(boardGeometry, []),
-    edges = useMemo(() => new EdgesGeometry(geometry, 30), [geometry]);
-  useFrame((state, delta) => {
-    const t = state.clock.elapsedTime;
+  const rings = useRef<(Group | null)[]>([]);
+
+  useFrame(({ clock, pointer }, delta) => {
+    const t = clock.elapsedTime;
+    const ease = Math.min(delta * 2.6, 1);
     if (root.current) {
-      const targetY =
-        0.1 + (moving ? Math.sin(t * 0.18) * 0.1 + state.pointer.x * 0.1 : 0);
       root.current.rotation.y +=
-        (targetY - root.current.rotation.y) * Math.min(delta * 3, 1);
-      root.current.position.y = moving ? Math.sin(t * 0.65) * 0.025 : 0;
+        ((moving ? pointer.x * 0.27 + 0.18 : 0.18) -
+          root.current.rotation.y) *
+        ease;
+      root.current.rotation.x +=
+        ((moving ? pointer.y * -0.16 : 0) - root.current.rotation.x) *
+        ease;
+      root.current.position.y = moving ? Math.sin(t * 0.65) * 0.055 : 0;
     }
-    plates.current.forEach((plate, i) => {
-      if (plate) {
-        const target = (1 - i) * (expanded ? 0.68 : 0.36);
-        plate.position.y = moving
-          ? plate.position.y +
-            (target - plate.position.y) * Math.min(delta * 5, 1)
-          : target;
-      }
+    rings.current.forEach((ring, i) => {
+      if (!ring) return;
+      ring.scale.setScalar(expanded ? 1.26 : 1);
+      if (moving) ring.rotation.z = t * (i % 2 ? -0.16 : 0.13) + i;
+      else ring.rotation.z = i;
     });
   });
+
   return (
     <group ref={root}>
+      <mesh scale={1.2}>
+        <icosahedronGeometry args={[0.82, 2]} />
+        <meshPhysicalMaterial
+          color={orbitColors[active]}
+          roughness={0.17}
+          metalness={0.48}
+          transmission={0.24}
+          thickness={1.15}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+        />
+      </mesh>
+      <mesh scale={1.23}>
+        <icosahedronGeometry args={[0.82, 2]} />
+        <meshBasicMaterial
+          color={orbitColors[active]}
+          wireframe
+          transparent
+          opacity={0.24}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh scale={0.6} rotation={[0.5, 0.35, 0.2]}>
+        <octahedronGeometry args={[0.9, 0]} />
+        <meshStandardMaterial
+          color="#0b173e"
+          emissive={orbitColors[active]}
+          emissiveIntensity={0.35}
+          metalness={0.75}
+          roughness={0.17}
+          flatShading
+        />
+      </mesh>
+      <mesh scale={0.36} rotation={[0, 0.6, 0.3]}>
+        <octahedronGeometry args={[0.9, 0]} />
+        <meshBasicMaterial color="#f8ffff" wireframe />
+      </mesh>
+
       {[0, 1, 2].map((i) => (
         <group
-          ref={(node) => {
-            plates.current[i] = node;
-          }}
           key={i}
-          position={[0, (1 - i) * (expanded ? 0.68 : 0.36), 0]}
+          ref={(node) => {
+            rings.current[i] = node;
+          }}
+          rotation={[0.55 + i * 0.55, i * 0.8, i]}
         >
-          <mesh geometry={geometry}>
-            <meshStandardMaterial
-              color={i === active ? "#325de8" : i === 1 ? "#dce0e6" : "#e8e9e6"}
-              metalness={i === active ? 0.35 : 0.55}
-              roughness={0.35}
-            />
-          </mesh>
-          <lineSegments geometry={edges}>
-            <lineBasicMaterial
-              color={i === active ? "#7497ff" : "#a6afb9"}
+          <mesh>
+            <torusGeometry args={[1.15 + i * 0.25, i === active ? 0.025 : 0.011, 8, 112]} />
+            <meshBasicMaterial
+              color={orbitColors[i]}
               transparent
-              opacity={0.8}
-            />
-          </lineSegments>
-          <mesh position={[0.25, 0.096, 0]}>
-            <boxGeometry args={[0.57, 0.055, 0.55]} />
-            <meshStandardMaterial
-              color={i === active ? "#b2c6ff" : "#6c737d"}
-              metalness={0.6}
-              roughness={0.3}
+              opacity={i === active ? 0.95 : 0.34}
+              depthWrite={false}
             />
           </mesh>
-          {[-0.5, -0.35, -0.2].map((x) => (
-            <mesh position={[x, 0.082, 0.09]} key={x}>
-              <boxGeometry args={[0.05, 0.025, 0.6]} />
-              <meshStandardMaterial
-                color={i === active ? "#91b0ff" : "#9fa8af"}
-              />
-            </mesh>
-          ))}
-          {[-0.56, 0.56].map((z) => (
-            <mesh position={[0.67, 0.075, z]} key={z}>
-              <cylinderGeometry args={[0.045, 0.045, 0.05, 12]} />
-              <meshStandardMaterial
-                color="#8593a3"
-                metalness={0.8}
-                roughness={0.3}
-              />
-            </mesh>
-          ))}
-          <mesh position={[0, -0.065, 0.62]}>
-            <boxGeometry args={[0.64, 0.016, 0.09]} />
+          <mesh position={[1.15 + i * 0.25, 0, 0]}>
+            <icosahedronGeometry args={[i === active ? 0.12 : 0.085, 1]} />
             <meshStandardMaterial
-              color={i === active ? "#2848ae" : "#242d3a"}
+              color={orbitColors[i]}
+              emissive={orbitColors[i]}
+              emissiveIntensity={i === active ? 2.3 : 0.85}
+              metalness={0.4}
+              roughness={0.2}
             />
           </mesh>
         </group>
       ))}
-      {[-0.75, 0.75].map((x) =>
-        [-0.57, 0.57].map((z) => (
-          <mesh key={`${x}-${z}`} position={[x, 0, z]}>
-            <cylinderGeometry
-              args={[0.035, 0.035, expanded ? 1.7 : 1.05, 10]}
-            />
-            <meshStandardMaterial
-              color="#c5c9cc"
-              metalness={0.65}
-              roughness={0.3}
-            />
-          </mesh>
-        )),
-      )}
-      <mesh position={[0, -0.97, 0]}>
-        <cylinderGeometry args={[1.42, 1.42, 0.045, 64]} />
-        <meshStandardMaterial color="#e3e4df" metalness={0.2} roughness={0.8} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.939, 0]}>
-        <ringGeometry args={[1.23, 1.235, 64]} />
-        <meshBasicMaterial color="#a6adaf" />
+
+      {stars.map((star, i) => (
+        <mesh key={i} position={[star.x, star.y, star.z]}>
+          <sphereGeometry args={[star.size, 6, 6]} />
+          <meshBasicMaterial
+            color={i % 3 === 0 ? "#63e6ff" : "#c6cbff"}
+            transparent
+            opacity={i % 4 === 0 ? 0.8 : 0.38}
+          />
+        </mesh>
+      ))}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.85, 0]}>
+        <ringGeometry args={[1.1, 1.12, 80]} />
+        <meshBasicMaterial color="#5a70da" transparent opacity={0.22} />
       </mesh>
     </group>
   );
 }
+
 export default function AssemblyScene({
   expanded,
   moving,
@@ -160,15 +152,16 @@ export default function AssemblyScene({
     <Canvas
       dpr={[1, mobile ? 1.25 : 1.5]}
       frameloop={moving ? "always" : "demand"}
-      camera={{ position: [3.5, 3, 4.7], fov: 34 }}
+      camera={{ position: [0, 0.3, 6.7], fov: mobile ? 43 : 38 }}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-      onCreated={() => onReady()}
+      onCreated={onReady}
       style={{ touchAction: "pan-y" }}
     >
-      <ambientLight intensity={1.6} />
-      <directionalLight position={[3, 6, 3]} intensity={4} />
-      <directionalLight position={[-4, 2, -2]} intensity={2} color="#ccd9ff" />
-      <Assembly expanded={expanded} moving={moving} active={active} />
+      <ambientLight intensity={0.45} />
+      <pointLight position={[2.8, 3, 3.5]} intensity={36} distance={12} color="#68e4ff" />
+      <pointLight position={[-3, -1.2, 1]} intensity={23} distance={10} color="#9c74ff" />
+      <directionalLight position={[0, 3, 2]} intensity={2.5} />
+      <Reactor expanded={expanded} moving={moving} active={active} />
     </Canvas>
   );
 }
