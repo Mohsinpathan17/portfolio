@@ -58,3 +58,7 @@ The existing Vercel project `mohsinpathan` uses this repository’s `main` branc
 The old Express contact handler was removed: its local JSON-file storage did not provide durable inbox delivery on Vercel. No server-side personal messages or credentials are included in this repository.
 
 See [the redesign report](docs/REDESIGN_REPORT.md) for validation, release details and remaining limitations.
+
+## Creative 3D upgrade (November 2026)
+
+The hero now features a dark editorial stage and an interactive WebGL orbital reactor representing interface, logic and systems. Its selection, exploration, pause, reduced-motion, offscreen suspension and WebGL fallback behavior are retained. The rest of the portfolio and source links remain intact. Styling introduces responsive cyan/violet highlights and subtle hover depth without additional runtime dependencies.
