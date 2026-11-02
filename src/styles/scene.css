@@ -234,3 +234,79 @@
     min-width: 44px;
   }
 }
+
+
+/* The orbital lab: cyan, violet and mint light over a quiet deep-space grid */
+.hero .assembly {
+  background:
+    radial-gradient(circle at 52% 47%, #1d3666b8, transparent 48%),
+    radial-gradient(circle at 78% 14%, #6549a62c, transparent 44%),
+    linear-gradient(140deg, #111a34e8, #080e22e8);
+  border: 1px solid #637ca169;
+  border-radius: 22px;
+  box-shadow: inset 0 1px 0 #dbeaff13, 0 22px 60px #0409165e;
+  color: #f4f7ff;
+  backdrop-filter: blur(12px);
+}
+.hero .assembly::before {
+  background-image:
+    linear-gradient(#9dc1ff15 1px, transparent 1px),
+    linear-gradient(90deg, #9dc1ff15 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse at center, black 14%, transparent 76%);
+}
+.hero .assembly-caption {
+  color: #a5cde1;
+  letter-spacing: 1.5px;
+}
+.hero .assembly-canvas { height: 350px; margin-top: 0; }
+.hero .assembly-canvas::after {
+  left: 20%;
+  right: 20%;
+  bottom: 25px;
+  height: 25px;
+  background: #54c5ff47;
+  filter: blur(27px);
+}
+.hero .assembly-actions { padding-bottom: 18px; }
+.hero .assembly-actions button {
+  background: #ffffff0a;
+  border: 1px solid #63789d77;
+  color: #deeaff;
+  border-radius: 8px;
+}
+.hero .assembly-actions button:hover:not(:disabled) {
+  border-color: #9aeef3;
+  color: #9aeef3;
+}
+.hero .layer-tabs {
+  border-top-color: #62718c67;
+  border-bottom-color: #62718c67;
+}
+.hero .layer-tabs button { color: #aebcdb; }
+.hero .layer-tabs button[aria-pressed="true"] { color: #8fedf7; }
+.hero .layer-tabs button[aria-pressed="true"]::after {
+  background: linear-gradient(90deg, #77f3ff, #ae8fff);
+}
+.hero .assembly-description { color: #c0cce2; }
+.hero .assembly-fallback i {
+  background: #1c355a;
+  border-color: #69a4c0;
+  box-shadow: 9px 12px 24px #03081450;
+}
+.hero .assembly-fallback i:first-child {
+  background: #47b7de;
+  border-color: #96eaff;
+}
+.hero .assembly-fallback i:last-child { background: #383366; }
+@media (max-width: 800px) {
+  .hero .assembly-canvas { height: 320px; }
+}
+@media (max-width: 540px) {
+  .hero .assembly { padding: 16px 12px; }
+  .hero .assembly-canvas { height: 245px; margin-inline: -8px; }
+  .hero .assembly-caption { font-size: 8px; }
+  .hero .layer-tabs button { gap: 4px; font-size: 9px; }
+  .hero .assembly-actions button { font-size: 9px; }
+  .hero .assembly-description { font-size: 10px; }
+}
