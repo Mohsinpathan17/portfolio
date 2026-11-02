@@ -88,8 +88,8 @@ export default function Assembly() {
   return (
     <div className="assembly" ref={ref}>
       <div className="assembly-caption">
-        <span>THE BUILDING BLOCKS</span>
-        <span>01 — 03</span>
+        <span>THE ORBITAL LAB</span>
+        <span>INTERACTIVE / 01—03</span>
       </div>
       <div className="assembly-canvas" data-ready={ready}>
         <SceneBoundary>
