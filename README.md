@@ -62,3 +62,7 @@ See [the redesign report](docs/REDESIGN_REPORT.md) for validation, release detai
 ## Creative 3D upgrade (November 2026)
 
 The hero now features a dark editorial stage and an interactive WebGL orbital reactor representing interface, logic and systems. Its selection, exploration, pause, reduced-motion, offscreen suspension and WebGL fallback behavior are retained. The rest of the portfolio and source links remain intact. Styling introduces responsive cyan/violet highlights and subtle hover depth without additional runtime dependencies.
+
+## Nightfall — Full portfolio visual upgrade (November 2026)
+
+The entire site now uses a cohesive cinematic dark theme: navigation, landing section, 3D orbital hero, interactive project gallery with pointer-responsive 3D rings, featured work, project cards, engineering approach, skills, experience, contact and the NEXYRAL case-study route. The original project links, résumé, and evidence-driven content are preserved. `src/styles/nightfall.css` provides the site-wide visual system, and `src/components/ProjectDeck.tsx` controls the accessible project explorer. The pointer effects use CSS 3D transforms without additional dependencies; the hero continues to use real Three.js/WebGL with pause, reduced-motion and fallback behavior.
