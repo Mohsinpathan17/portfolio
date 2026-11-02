@@ -1788,3 +1788,142 @@ p {
     font-size: 11px;
   }
 }
+
+
+/* 2026 creative upgrade — an immersive yet accessible opening act */
+.hero.container {
+  position: relative;
+  width: min(1360px, calc(100% - 56px));
+  max-width: 1360px;
+  min-height: 690px;
+  padding: clamp(42px, 5vw, 76px);
+  padding-right: clamp(20px, 3vw, 48px);
+  margin-top: 20px;
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+  color: #f7faff;
+  background:
+    radial-gradient(ellipse at 76% 37%, #32336a 0, transparent 43%),
+    radial-gradient(ellipse at 7% 96%, #17375a 0, transparent 46%),
+    linear-gradient(127deg, #090c18 12%, #0d1227 57%, #0c1023 100%);
+  border: 1px solid #334162;
+  box-shadow: 0 28px 85px #151d381f;
+  gap: clamp(22px, 4vw, 64px);
+}
+.hero.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(#99bcff0b 1px, transparent 1px),
+    linear-gradient(90deg, #99bcff0b 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(90deg, transparent, black 67%);
+}
+.hero.container::after {
+  content: "MP / 001 — DIGITAL ATELIER";
+  position: absolute;
+  bottom: 22px;
+  right: 36px;
+  color: #8f9dc2;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 2px;
+}
+.hero-copy { position: relative; z-index: 1; }
+.hero .hero-eyebrow {
+  color: #a6e8ff;
+  letter-spacing: 2.2px;
+  font-size: 10px;
+}
+.hero .hero-eyebrow .small-cross { color: #8affd9; }
+.hero h1 {
+  font-size: clamp(52px, 5.35vw, 78px);
+  color: #f9fbff;
+  letter-spacing: -4.4px;
+}
+.hero h1 > span {
+  background: linear-gradient(120deg, #b7b8ff 0%, #86eaf8 64%, #b6f7e7 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.hero .hero-copy > p { color: #bec7e0; }
+.hero .hero-copy strong { color: #fff; }
+.hero .button.dark {
+  color: #071520;
+  background: #a7f1f3;
+  box-shadow: 0 7px 25px #67e7e325;
+}
+.hero .button.dark:hover { background: #d4fdff; }
+.hero .button.quiet {
+  color: #f1f3ff;
+  background: #ffffff0b;
+  border-color: #65739280;
+}
+.hero .button.quiet:hover { background: #ffffff20; }
+.hero .hero-meta, .hero .availability, .hero .snapshot-link { color: #aab6cf; }
+.hero .availability > i {
+  background: #8bf2bf;
+  box-shadow: 0 0 0 5px #8bf2bf1a, 0 0 14px #8bf2bf;
+}
+.hero .snapshot-link:hover { color: #9af4ff; }
+.hero .snapshot-link { min-height: 44px; }
+.hero .snapshot-link:focus-visible,
+.hero .button:focus-visible { outline-color: #9af4ff; }
+.flagship-screen { transform-style: preserve-3d; }
+.project-card, .flagship-screen, .toolkit {
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+@media (hover: hover) {
+  .project-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 24px 60px #202c3b16;
+    border-color: #b4bfd4;
+  }
+  .flagship-screen:hover {
+    transform: perspective(900px) rotateY(-2deg) translateY(-5px);
+  }
+}
+@media (max-width: 1100px) {
+  .hero.container {
+    width: calc(100% - 44px);
+    padding: 42px 28px;
+    gap: 24px;
+    min-height: 610px;
+  }
+  .hero h1 { font-size: clamp(48px, 5.4vw, 67px); }
+}
+@media (max-width: 800px) {
+  .hero.container {
+    width: calc(100% - 40px);
+    padding: 38px 32px 48px;
+    min-height: 0;
+    gap: 26px;
+  }
+  .hero h1 { font-size: clamp(45px, 9vw, 66px); }
+}
+@media (max-width: 540px) {
+  .hero.container {
+    width: calc(100% - 24px);
+    padding: 37px 19px 43px;
+    border-radius: 18px;
+    margin-top: 12px;
+    gap: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 10.7vw, 50px);
+    letter-spacing: -2.7px;
+  }
+  .hero .hero-copy > p { font-size: 14px; }
+  .hero .hero-eyebrow { font-size: 9px; letter-spacing: 1.3px; }
+  .hero-actions { flex-wrap: wrap; }
+  .hero .hero-actions .button { flex: 1 1 auto; padding: 14px 12px; }
+  .hero.container::after { right: 22px; bottom: 14px; font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card, .flagship-screen, .toolkit { transition: none; }
+}
